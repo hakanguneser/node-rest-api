@@ -2,10 +2,10 @@
   "name": "node-rest-api",
   "version": "1.0.0",
   "description": "This repository contains Rest API examples of the most used HTTP methods.",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "test": "jest --watchAll",
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
