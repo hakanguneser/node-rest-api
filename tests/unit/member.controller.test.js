@@ -23,17 +23,32 @@ describe('MemberContoller.getAllMembers', () => {
 
 
 describe('MemberContoller.createMember', () => {
+    beforeEach(() => {
+        req.body = newMember;
+    });
     it('should have a createMember function', () => {
         expect(typeof MemberController.createMember).toBe('function');
     });
     it('should call MemberModel.create', () => {
-        req.body = newMember;
         MemberController.createMember(req, res, next);
         expect(MemberModel.create).toBeCalledWith(newMember);
     });
-    it('should return 201 response code',async()=>{
-        req.body = newMember;
-        await MemberController.createMember(req,res,next);
+    it('should return 201 response code', async () => {
+        await MemberController.createMember(req, res, next);
         expect(res.statusCode).toBe(201);
+    });
+    it('should return JSON body in response', async () => {
+        MemberModel.create.mockReturnValue(newMember);    
+        await MemberController.createMember(req,res,next);
+        expect(res._isEndCalled()).toBeTruthy();
+        expect(res.statusCode).toBe(201);
+        expect(res._getJSONData()).toStrictEqual(newMember);
+    });
+    it('should handle error',async()=>{
+        const errorMessage = {message:"Error"};
+        const rejectedPromise = Promise.reject(errorMessage);
+        MemberModel.create.mockReturnValue(rejectedPromise);
+        await MemberController.createMember(req,res,next);
+        expect(next).toBeCalledWith(errorMessage);
     })
 });
