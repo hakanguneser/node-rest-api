@@ -30,5 +30,10 @@ describe('MemberContoller.createMember', () => {
         req.body = newMember;
         MemberController.createMember(req, res, next);
         expect(MemberModel.create).toBeCalledWith(newMember);
+    });
+    it('should return 201 response code',async()=>{
+        req.body = newMember;
+        await MemberController.createMember(req,res,next);
+        expect(res.statusCode).toBe(201);
     })
 });

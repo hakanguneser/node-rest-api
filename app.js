@@ -6,10 +6,11 @@ const app = express();
 const PORT = 3000;
 const MONGO_DB_URI = 'mongodb://localhost:27017/node-db';
 
+app.use(express.json());
+
 app.use('/members', memberRoutes);
 
 app.use('/', (req, res, next) => {
-    console.log("123");
     res.json("Welcome to base URL");
 });
 
