@@ -4,7 +4,7 @@
   "description": "This repository contains Rest API examples of the most used HTTP methods.",
   "main": "app.js",
   "scripts": {
-    "test": "",
+    "test": "jest --watchAll",
     "start": "nodemon app.js"
   },
   "repository": {
