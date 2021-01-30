@@ -77,9 +77,76 @@ const memberController = require('../controllers/member.controller');
  *                   decription: Error information
  *                   example: Member validation failed; email; Path `email` is required.
 */
-
 router.post('/', memberController.createMember);
+
+/**
+ * @swagger
+ * /members:
+ *   get:
+ *     summary: Retrieve a list of members.
+ *     description: Retrieve a list of all members.
+ *     responses:
+ *       200:
+ *         description: A list of all members.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Member'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: String
+ *                   decription: Error information
+ *                   example: Error information will be here.
+*/
 router.get('/', memberController.getAllMembers);
+
+/**
+ * @swagger
+ * /members/{memberId}:
+ *   get:
+ *     summary: Retrieve a single member.
+ *     description: Retrieve a single member.
+ *     parameters:
+ *       - in: path
+ *         name: memberId
+ *         description: AlfaNumeric ID of the member to retrieve.
+ *         schema:
+ *           type: String
+ *     responses:
+ *       200:
+ *         description: A single member.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Member'
+ *       404:
+ *         description: Member not exists.
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: String
+ *                   decription: Error information
+ *                   example: Error information will be here.
+*/
 router.get('/:memberId',memberController.findByMemberId);
 router.put('/:memberId',memberController.updateMember);
 router.delete('/:memberId',memberController.deleteMember);
