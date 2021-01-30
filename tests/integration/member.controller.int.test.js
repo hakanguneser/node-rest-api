@@ -47,5 +47,15 @@ describe(endpointUrl, () => {
     it("PUT byMemberId doesn't exists "+ endpointUrl+":/memberId",async()=>{
         const response = await request(app).put(endpointUrl+nonExistMemberId).send(updatedMember);
         expect(response.statusCode).toBe(404);
-    })
+    });
+    it("DELETE "+endpointUrl+":/memberId",async()=>{
+        const response = await request(app).delete(endpointUrl+memberId);
+        expect(response.statusCode).toBe(200);
+        expect(response.body.firstName).toStrictEqual(updatedMember.firstName);
+        expect(response.body.email).toStrictEqual(updatedMember.email);
+    });
+    it("DELETE byMemberId doesn't exists "+endpointUrl+":/memberId",async()=>{
+        const response = await request(app).delete(endpointUrl+nonExistMemberId);
+        expect(response.statusCode).toBe(404);
+    });
 });

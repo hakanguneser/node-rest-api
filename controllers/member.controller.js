@@ -4,7 +4,7 @@ exports.updateMember = async (req, res, next) => {
     try {
         const updatedMember = await MemberModel.findByIdAndUpdate(req.params.memberId, req.body, {
             new: true,
-            useFindAndModify : false
+            useFindAndModify: false
         });
         if (updatedMember) {
             res.status(200).json(updatedMember);
@@ -46,3 +46,16 @@ exports.createMember = async (req, res, next) => {
         next(error);
     }
 };
+
+exports.deleteMember = async (req, res, next) => {
+    try {
+        const deleteMember = await MemberModel.findByIdAndDelete(req.params.memberId);
+        if (deleteMember) {
+            res.status(200).json(deleteMember);
+        } else {
+            res.status(404).send();
+        }
+    } catch (error) {
+        next(error);
+    }
+}

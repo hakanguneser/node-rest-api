@@ -4,6 +4,7 @@ const MemberModel = require('../../model/member.model');
 
 const newMember = require('../mock-data/new-member.json');
 const memberList = require('../mock-data/member-list.json');
+
 jest.mock('../../model/member.model');
 
 let req, res, next;
@@ -16,37 +17,69 @@ beforeEach(() => {
     res = httpMocks.createResponse();
     next = jest.fn();
 });
-
-describe('MemberController.updateMember',()=>{
-    it('should have a updateMember function',()=>{
-        expect(typeof MemberController.updateMember).toBe('function');
+describe('MemberController.deleteMember', () => {
+    it('should have a deleteMember function', () => {
+        expect(typeof MemberController.deleteMember).toBe('function');
     });
-    it('should call MemberModel.findByIdAndUpdate',async()=>{
+    it('should call MemberModel.findByIdAndDelete', async () => {
         req.params.memberId = memberId;
-        req.body = newMember;
-        await MemberController.updateMember(req,res,next);
-        expect(MemberModel.findByIdAndUpdate).toHaveBeenCalledWith(memberId,newMember,{new:true,useFindAndModify:false});
+        await MemberController.deleteMember(req, res, next);
+        expect(MemberModel.findByIdAndDelete).toHaveBeenCalledWith(memberId);
     });
-    it('should return updated JSON body and response code 200',async()=>{
+    it('should return deleted JSON body and response code 200', async () => {
         req.params.memberId = memberId;
-        req.body = newMember;
-        MemberModel.findByIdAndUpdate.mockReturnValue(newMember);
-        await MemberController.updateMember(req,res,next);
+        MemberModel.findByIdAndDelete.mockReturnValue(newMember);
+        await MemberController.deleteMember(req, res, next);
         expect(res._isEndCalled()).toBeTruthy();
         expect(res.statusCode).toBe(200);
         expect(res._getJSONData()).toStrictEqual(newMember);
     });
-    it('should handle error',async()=>{
-        const rejectedPromise = Promise.reject(errorMessage) ;
-        MemberModel.findByIdAndUpdate.mockReturnValue(rejectedPromise);
-        await MemberController.updateMember(req,res,next);
-        expect(next).toHaveBeenCalledWith(errorMessage);
+    it('should handle error', async () => {
+        const rejectedPromise = Promise.reject(errorMessage);
+        MemberModel.findByIdAndDelete.mockReturnValue(rejectedPromise);
+        await MemberController.deleteMember(req, res, next);
+        expect(next).toBeCalledWith(errorMessage);
     });
-    it('should return 404 when member not exists',async()=>{
-        MemberModel.findByIdAndUpdate.mockReturnValue(null);
-        await MemberController.updateMember(req,res,next);
+    it('should return 404 when member not exists', async () => {
+        MemberModel.findByIdAndDelete.mockReturnValue(null);
+        await MemberController.deleteMember(req, res, next);
         expect(res.statusCode).toBe(404);
     });
+});
+describe('MemberController.updateMember', () => {
+    it('should have a updateMember function', () => {
+        expect(typeof MemberController.updateMember).toBe('function');
+    });
+    it('should call MemberModel.findByIdAndUpdate', async () => {
+        req.params.memberId = memberId;
+        req.body = newMember;
+        await MemberController.updateMember(req, res, next);
+        expect(MemberModel.findByIdAndUpdate).toHaveBeenCalledWith(memberId, newMember, {
+            new: true,
+            useFindAndModify: false
+        });
+    });
+    it('should return updated JSON body and response code 200', async () => {
+        req.params.memberId = memberId;
+        req.body = newMember;
+        MemberModel.findByIdAndUpdate.mockReturnValue(newMember);
+        await MemberController.updateMember(req, res, next);
+        expect(res._isEndCalled()).toBeTruthy();
+        expect(res.statusCode).toBe(200);
+        expect(res._getJSONData()).toStrictEqual(newMember);
+    });
+    it('should handle error', async () => {
+        const rejectedPromise = Promise.reject(errorMessage);
+        MemberModel.findByIdAndUpdate.mockReturnValue(rejectedPromise);
+        await MemberController.updateMember(req, res, next);
+        expect(next).toHaveBeenCalledWith(errorMessage);
+    });
+    it('should return 404 when member not exists', async () => {
+        MemberModel.findByIdAndUpdate.mockReturnValue(null);
+        await MemberController.updateMember(req, res, next);
+        expect(res.statusCode).toBe(404);
+    });
+
 });
 describe('MemberController.findByMemberId', () => {
     it('should have a findByMemberId function', () => {
@@ -101,7 +134,6 @@ describe('MemberContoller.getAllMembers', () => {
         expect(next).toBeCalledWith(errorMessage);
     });
 });
-
 
 describe('MemberContoller.createMember', () => {
     beforeEach(() => {
