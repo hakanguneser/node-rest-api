@@ -19,6 +19,11 @@ const memberController = require('../controllers/member.controller');
  *              description: The member's surname on Identification card
  *              example: Malfoy
  *              required : true
+ *          email:
+ *              type: String
+ *              description: The member's personel and valid email address
+ *              example: malfoy@mail.com
+ *              required : true
  *          age:
  *              type: Number
  *              description: The member's age
@@ -38,6 +43,40 @@ const memberController = require('../controllers/member.controller');
  *         - $ref: '#/components/schemas/NewMember'
  *                  
  */
+
+ /**
+ * @swagger
+ * /members:
+ *   post:
+ *     summary: Create a Member.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/NewMember'
+ *     responses:
+ *       201:
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Member'
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: String
+ *                   decription: Error information
+ *                   example: Member validation failed; email; Path `email` is required.
+*/
 
 router.post('/', memberController.createMember);
 router.get('/', memberController.getAllMembers);
