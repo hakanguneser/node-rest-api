@@ -192,6 +192,43 @@ router.get('/:memberId',memberController.findByMemberId);
  *                   example: Error information will be here.
 */
 router.put('/:memberId',memberController.updateMember);
+
+/**
+ * @swagger
+ * /members/{memberId}:
+ *   delete:
+ *     summary: Delete a single member.
+ *     description: Delete a single member.
+ *     parameters:
+ *       - in: path
+ *         name: memberId
+ *         description: AlfaNumeric ID of the member to retrieve and delete.
+ *         schema:
+ *           type: String
+ *     responses:
+ *       200:
+ *         description: Delete a member and retrive it in response body.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Member'
+ *       404:
+ *         description: Member not exists.
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: String
+ *                   decription: Error information
+ *                   example: Error information will be here.
+*/
 router.delete('/:memberId',memberController.deleteMember);
 
 module.exports = router;
