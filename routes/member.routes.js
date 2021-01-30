@@ -22,7 +22,7 @@ const memberController = require('../controllers/member.controller');
  *          email:
  *              type: String
  *              description: The member's personel and valid email address
- *              example: malfoy@mail.com
+ *              example: draco@mail.com
  *              required : true
  *          age:
  *              type: Number
@@ -148,6 +148,49 @@ router.get('/', memberController.getAllMembers);
  *                   example: Error information will be here.
 */
 router.get('/:memberId',memberController.findByMemberId);
+
+/**
+ * @swagger
+ * /members/{memberId}:
+ *   put:
+ *     summary: Update a single member.
+ *     description: Update a single member.
+ *     parameters:
+ *       - in: path
+ *         name: memberId
+ *         description: AlfaNumeric ID of the member to retrieve and update.
+ *         schema:
+ *           type: String
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/components/schemas/NewMember'
+ *     responses:
+ *       200:
+ *         description: Update a member and retrive it in response body.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 data:
+ *                   $ref: '#/components/schemas/Member'
+ *       404:
+ *         description: Member not exists.
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: String
+ *                   decription: Error information
+ *                   example: Error information will be here.
+*/
 router.put('/:memberId',memberController.updateMember);
 router.delete('/:memberId',memberController.deleteMember);
 
