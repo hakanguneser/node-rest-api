@@ -1,11 +1,27 @@
 const MemberModel = require('../model/member.model');
 
-exports.findByMemberId = async(req,res,next)=>{
+exports.updateMember = async (req, res, next) => {
+    try {
+        const updatedMember = await MemberModel.findByIdAndUpdate(req.params.memberId, req.body, {
+            new: true,
+            useFindAndModify : false
+        });
+        if (updatedMember) {
+            res.status(200).json(updatedMember);
+        } else {
+            res.status(404).send();
+        }
+    } catch (error) {
+        next(error);
+    }
+}
+
+exports.findByMemberId = async (req, res, next) => {
     try {
         const member = await MemberModel.findById(req.params.memberId);
-        if(member){
+        if (member) {
             res.status(200).json(member);
-        }else{
+        } else {
             res.status(404).send();
         }
     } catch (error) {

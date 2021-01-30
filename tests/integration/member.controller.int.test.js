@@ -2,6 +2,7 @@ const request = require('supertest');
 const app = require("../../app");
 const newMember = require('../mock-data/new-member.json');
 const newMemberWithMissingProperty = require('../mock-data/new-member-with-missing-property.json');
+const updatedMember = require('../mock-data/member-updated.json');
 const endpointUrl = '/members/';
 let memberId;
 const nonExistMemberId = '6015f77384113e49d0a448cd';
@@ -38,4 +39,13 @@ describe(endpointUrl, () => {
         const response = await request(app).get(endpointUrl+nonExistMemberId);
         expect(response.status).toBe(404);
     });
+    it("PUT "+endpointUrl+":/memberId",async()=>{
+        const response = await request(app).put(endpointUrl+memberId).send(updatedMember);
+        expect(response.statusCode).toBe(200);
+        expect(response.body.firstName).toStrictEqual(updatedMember.firstName);
+    });
+    it("PUT byMemberId doesn't exists "+ endpointUrl+":/memberId",async()=>{
+        const response = await request(app).put(endpointUrl+nonExistMemberId).send(updatedMember);
+        expect(response.statusCode).toBe(404);
+    })
 });
