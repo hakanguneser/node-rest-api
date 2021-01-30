@@ -1,9 +1,13 @@
 const MemberModel = require('../model/member.model');
 
-exports.getAllMembers = (req, res, next) => {
-    res.json('Member route get all function called');
+exports.getAllMembers = async (req, res, next) => {
+    try {
+        const memberList = await MemberModel.find({});
+        res.status(200).json(memberList);
+    } catch (error) {
+        next(error);
+    }
 };
-
 
 exports.createMember = async (req, res, next) => {
     try {

@@ -1,0 +1,19 @@
+[{
+        "firstName": "Draco",
+        "lastName": "Malfoy",
+        "email": "draco@mail.com",
+        "age": 25
+    },
+    {
+        "firstName": "Severus",
+        "lastName": "Snape",
+        "email": "severus@mail.com",
+        "age": 52
+    },
+    {
+        "firstName": "Albus Percival Wulfric Brian",
+        "lastName": "Dumbledore",
+        "email": "albus@mail.com",
+        "age": 125
+    }
+]

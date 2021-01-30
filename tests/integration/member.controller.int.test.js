@@ -17,5 +17,12 @@ describe(endpointUrl, () => {
         expect(response.body).toStrictEqual({
             message: "Member validation failed: email: Path `email` is required."
           });
-    })
+    });
+    it("GET "+endpointUrl,async()=>{
+        const response = await request(app).get(endpointUrl);
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBeTruthy();
+        expect(response.body[0].firstName).toBeDefined();
+        expect(response.body[0].email).toBeDefined();
+    });
 });
