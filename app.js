@@ -2,7 +2,7 @@ const express = require('express');
 const memberRoutes = require('./routes/member.routes');
 const mongoDB = require('./mongodb/mongodb.connect');
 const swaggerUi = require('swagger-ui-express');
-const swaggerDocs = require('./config/swagger.api.documentation');
+const swaggerDocs = require('./swagger.api.documentation');
 
 const app = express();
 app.use(express.json());

@@ -14,10 +14,15 @@ cd node-rest-api
 npm install
 npm run start
 ```
-### Creating DB on local environment
-If local database needed, docker compose file is ready. 
+### Dockerizing the application with MongoDB
+
+First, make sure Docker is available in the PC. Can be tested with the ```docker -v``` command. 
+If not, you can download from the [docker official web page](https://www.docker.com/) and install with following instructure.
+
+
 ```sh 
-docker-compose -f .\config\docker-compose.yml up -d
+cd ./{appFolder}
+docker-compose up 
 ```
 
 **Navigate** to `localhost:3000` to see the API. You should see links to `/members` and `/members/:memberId`. Navigate to one of these to see user data from application.
